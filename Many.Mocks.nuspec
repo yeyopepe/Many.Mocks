@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Many.Mocks</id>
+	<title>Moq extensions to handle many mocks</title>
+    <version>0.2.0-beta1</version>
+    <authors>Sergio José Martínez Primiani</authors>
+    <owners>Sergio José Martínez Primiani</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/yeyopepe/Many.Mocks</projectUrl>
+    <iconUrl>https://www.nuget.org/Content/gallery/img/default-package-icon.svg</iconUrl>
+    <description>Time-saving extensions to create and setup large number of mocks using Moq framework.</description>
+    <tags>moq tdd mocking mocks unittesting agile unittest extensions</tags>
+	<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.2">
+        <dependency id="Moq" version="4.13.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Moq" version="4.13.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Many.Mocks\bin\Release\net462\Many.Mocks.dll" target="lib\net462\Many.Mocks.dll" />
+    <file src="Many.Mocks\bin\Release\net462\Many.Mocks.xml" target="lib\net462\Many.Mocks.xml" />
+	<file src="Many.Mocks\bin\Release\net462\Many.Mocks.pdb" target="lib\net462\Many.Mocks.pdb" />
+    <file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.dll" target="lib\netstandard2.0\Many.Mocks.dll" />
+    <file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.xml" target="lib\netstandard2.0\Many.Mocks.xml" />
+	<file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.pdb" target="lib\netstandard2.0\Many.Mocks.pdb" />
+  </files>
+</package>

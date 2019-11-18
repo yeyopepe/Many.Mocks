@@ -1,0 +1,1 @@
+nuget pack .\Many.Mocks.nuspec -Symbols -SymbolPackageFormat snupkg
