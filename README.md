@@ -1,9 +1,9 @@
-# Moq.Many
+# Many.Mocks
 Time-saving extensions to create and setup large number of mocks using Moq framework.
 
-Examples:
+## **How to use**
 
-Given a class
+You have a class with lots of mocks...
 ```
 public class UserManager : UserManager<User>
     {
@@ -35,6 +35,8 @@ public class UserManager : UserManager<User>
         public void Method(IUserStore<TUser> store) { ... }
     }
 ```
+  
+### **How to generate a bunch of mocks from any method or constructor?**
 
 1. You can get every needed mock just typing:
 ```
@@ -49,4 +51,11 @@ var mocks = typeof(UserManager).GetMocksFromConstructors(new List<Type>{ typeof(
 3. Same works for any method:
 ```
 var mocks = typeof(UserManager).GetMocksFrom("method", new List<Type>{ typeof(IUserPasswordStore<User>) }); //1 mock
+```
+
+### **How to instantiate a class injecting a bunch of mocks?**
+```
+var mocks = typeof(UserManager).GetMocksFromConstructors(); //Get mocks
+
+var result = mocks.TryInstantiate(out UserManager result); //Get the instance
 ```
