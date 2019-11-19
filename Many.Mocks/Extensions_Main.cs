@@ -9,6 +9,11 @@ using Moq;
 
 namespace Many.Mocks
 {
+    public enum Behavior
+    {
+        Loose,
+        Strict
+    }
     /// <summary>
     /// Represents extensions to handle large number of mocks
     /// </summary>
@@ -153,11 +158,12 @@ namespace Many.Mocks
             _ = mocks.Invoke<T, object>(method, obj);
         }
         /// <summary>
-        /// Gets mocks from given parameters
+        /// Gets mocks from parameters of given method
         /// </summary>
-        /// <param name="sourceMethod"></param>
+        /// <param name="sourceMethod">Method to get parameters from</param>
+        /// <param name="behavior">Mock's behavior</param>
         /// <returns>List of mocks</returns>
-        private static IEnumerable<MockItem> GetMocksFrom(MethodBase sourceMethod)
+        private static IEnumerable<MockItem> GetMocksFrom(MethodBase sourceMethod, Behavior behavior = Behavior.Loose)
         {
             var result = new List<MockItem>();
             foreach (var item in sourceMethod.GetParameters())
@@ -169,22 +175,21 @@ namespace Many.Mocks
 
                 try
                 {
+                    var method = GetMockOfGenericUsingBehaviour(item);
                     if (isInterface)
                     {
-                        var method = GetMockOfGeneric(item);
                         temp.Details = new MockItem.MockDetail()
                         {
                             IsInterface = isInterface,
-                            Instance = method.Invoke(null, null),
+                            Instance = method.Invoke(null, new object[] { behavior.Convert() }),
                             Type = item.ParameterType
                         };
                     }
                     else
                     {
-                        var method = GetMockOfGeneric(item);
                         temp.Details = new MockItem.MockDetail()
                         {
-                            Instance = method.Invoke(null, null),
+                            Instance = method.Invoke(null, new object[] { behavior.Convert() }),
                             Type = item.ParameterType
                         };
 
@@ -203,16 +208,34 @@ namespace Many.Mocks
             return result;
         }
         /// <summary>
-        /// Gets the Mock.Of generic method
+        /// Gets the Behaviour override of Mock.Of generic method 
         /// </summary>
         /// <param name="parameter">Generic parameter</param>
         /// <returns>Method to get Mock</returns>
         /// <exception cref="Exception"></exception>
-        private static MethodInfo GetMockOfGeneric(ParameterInfo parameter)
+        private static MethodInfo GetMockOfGenericUsingBehaviour(ParameterInfo parameter)
         {
             var methods = typeof(Mock).GetMethods().Where(p => p.Name == "Of");
-            var method = methods.Where(p => !p.GetParameters().Any()).First();
+            var method = methods.Where(p => p.GetParameters().Count() == 1 &&
+                                            p.GetParameters().First().ParameterType == typeof(Moq.MockBehavior)).First();
             return method.MakeGenericMethod(parameter.ParameterType);
+        }
+        /// <summary>
+        /// Converts custom Mock's behavior to Moq's one
+        /// </summary>
+        /// <param name="behavior">Behavior</param>
+        /// <returns>Moq's behavior</returns>
+        private static Moq.MockBehavior Convert(this Behavior behavior)
+        {
+            switch (behavior)
+            {
+                case Behavior.Loose:
+                    return MockBehavior.Loose;
+                case Behavior.Strict:
+                    return MockBehavior.Strict;
+                default:
+                    throw new NotImplementedException(nameof(behavior));
+            }
         }
      
     }
