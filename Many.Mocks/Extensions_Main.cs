@@ -24,9 +24,12 @@ namespace Many.Mocks
         /// </summary>
         /// <param name="type">Type to extract mocks from</param>
         /// <param name="signature">Signature of specific constructor to scan. If null then every override is scanned for mocks</param>
+        /// <param name="behavior">Mock's behavior</param>
         /// <returns>Mocks needed by constructors</returns>
         /// <exception cref="MethodNotFoundException"></exception>
-        public static Bag GetMocksFromConstructors(this Type type, IEnumerable<Type> signature = null)
+        public static Bag GetMocksFromConstructors(this Type type, 
+                                                    IEnumerable<Type> signature = null,
+                                                    Behavior behavior = Behavior.Loose)
         {
             var result = new Bag();
             var mocks = new List<MockItem>();
@@ -47,7 +50,7 @@ namespace Many.Mocks
             //Scan for mocks
             foreach (var item in ctors)
             {
-                var temp = GetMocksFrom(item);
+                var temp = GetMocksFrom(item, behavior);
                 if (temp.Any())
                     mocks.AddRange(temp);
             }
@@ -61,9 +64,13 @@ namespace Many.Mocks
         /// <param name="type">Type to extract mocks from</param>
         /// <param name="methodName">Method name (case insensitive)</param>
         /// <param name="signature">Signature of specific method to scan. If null then every override is scanned for mocks</param>
+        /// <param name="behavior">Mock's behavior</param>
         /// <returns>Mocks needed by method</returns>
         /// <exception cref="MethodNotFoundException"></exception>
-        public static Bag GetMocksFrom(this Type type, string methodName, IEnumerable<Type> signature = null)
+        public static Bag GetMocksFrom(this Type type, 
+                                        string methodName,
+                                        IEnumerable<Type> signature = null,
+                                        Behavior behavior = Behavior.Loose)
         {
             var result = new Bag();
             var mocks = new List<MockItem>();
@@ -84,7 +91,7 @@ namespace Many.Mocks
             //Scan for mocks
             foreach (var item in methods)
             {
-                var temp = GetMocksFrom(item);
+                var temp = GetMocksFrom(item, behavior);
                 if (temp.Any())
                     mocks.AddRange(temp);
             }
