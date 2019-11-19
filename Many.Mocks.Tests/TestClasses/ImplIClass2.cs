@@ -14,5 +14,9 @@ namespace Many.Mocks.Tests.TestClasses
         {
             return true;
         }
+        public void VoidSecond(IClass2 class2, IClass3 class3)
+        {
+            //Do nothing
+        }
     }
 }

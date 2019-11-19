@@ -137,6 +137,22 @@ namespace Many.Mocks
             return (R)toInvoke.Invoke(obj, mocks.Select(p => p.Instance).ToArray());
         }
         /// <summary>
+        /// Invokes a method using mocks best fit
+        /// </summary>
+        /// <typeparam name="T">Object type</typeparam>
+        /// <param name="mocks">Mocks to use in invocation</param>
+        /// <param name="method">Method to invoke</param>
+        /// <param name="obj">Object to use to invoke</param>
+        /// <exception cref="MethodNotFoundException"></exception>
+        /// <exception cref="TargetInvocationException"></exception>
+        /// <exception cref="TargetException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="Exception"></exception>
+        public static void Invoke<T>(this HashSet<MockDetail> mocks, string method, T obj)
+        {
+            _ = mocks.Invoke<T, object>(method, obj);
+        }
+        /// <summary>
         /// Gets mocks from given parameters
         /// </summary>
         /// <param name="sourceMethod"></param>
