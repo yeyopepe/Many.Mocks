@@ -88,13 +88,13 @@ namespace Many.Mocks
             return result;
         }
         /// <summary>
-        /// Tries to get an instance of T using a constructor best fits with given mocks
+        /// Tries to get an instance using a constructor best fits with given mocks
         /// </summary>
         /// <typeparam name="T">Type to instantiate</typeparam>
         /// <param name="mocks">Mocks to use in constructor</param>
         /// <param name="result">Instance if process is successful</param>
         /// <returns>TRUE if we can get an instance. FALSE otherwise</returns>
-        public static bool TryInstantiate<T>(this HashSet<MockDetail> mocks, out T result)
+        public static bool UseToTryInstantiate<T>(this HashSet<MockDetail> mocks, out T result)
         {
             result = default(T);
             try
@@ -109,7 +109,33 @@ namespace Many.Mocks
             }
             catch { return false; }
         }
+        /// <summary>
+        /// Invokes a method using mocks best fit
+        /// </summary>
+        /// <typeparam name="T">Object type</typeparam>
+        /// <typeparam name="R">Result type</typeparam>
+        /// <param name="mocks">Mocks to use in invocation</param>
+        /// <param name="method">Method to invoke</param>
+        /// <param name="obj">Object to use to invoke</param>
+        /// <returns>Result of invocation</returns>
+        /// <exception cref="MethodNotFoundException"></exception>
+        /// <exception cref="TargetInvocationException"></exception>
+        /// <exception cref="TargetException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="Exception"></exception>
+        public static R Invoke<T, R>(this HashSet<MockDetail> mocks, string method, T obj)
+        {
+            var methods = typeof(T).GetMethods().Where(p => p.Name.Equals(method, StringComparison.InvariantCultureIgnoreCase));
+            if (methods == null || !methods.Any())
+                throw new MethodNotFoundException($"Method {method} was not found");
 
+            var rightName = methods.First().Name;
+            var toInvoke = typeof(T).GetMethod(rightName, mocks.Select(p => p.Type).ToArray());
+
+            if (toInvoke == null)
+                throw new MethodNotFoundException($"Given mocks do not match with {rightName}() parameters");
+            return (R)toInvoke.Invoke(obj, mocks.Select(p => p.Instance).ToArray());
+        }
         /// <summary>
         /// Gets mocks from given parameters
         /// </summary>

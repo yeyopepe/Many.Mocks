@@ -12,7 +12,7 @@ namespace Many.Mocks.Tests.TestClasses
 
         public bool Second(IClass2 class2, IClass3 class3)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

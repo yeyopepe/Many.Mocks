@@ -8,8 +8,8 @@ namespace Many.Mocks.Tests
         [Test]
         public void TryInstantiate_OrderedMockSignature_ReturnsInstance()
         {
-            var mocks = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors().Mocks.Distinct();
-            var parse = mocks.TryInstantiate(out TestClasses.ImplIClass3 result);
+            var mocks = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors().ExtractDistinct();
+            var parse = mocks.UseToTryInstantiate(out TestClasses.ImplIClass3 result);
             
             Assert.IsTrue(parse, "Parse failed");
             Assert.IsNotNull(result, "No instantiation");
@@ -17,8 +17,8 @@ namespace Many.Mocks.Tests
         [Test]
         public void TryInstantiate_UnorderedMockSignature_ReturnsInstance()
         {
-            var mocks = typeof(TestClasses.ImplIClass3Bis).GetMocksFromConstructors().Mocks.Distinct();
-            var parse = mocks.TryInstantiate(out TestClasses.ImplIClass3Bis result);
+            var mocks = typeof(TestClasses.ImplIClass3Bis).GetMocksFromConstructors().ExtractDistinct();
+            var parse = mocks.UseToTryInstantiate(out TestClasses.ImplIClass3Bis result);
 
             Assert.IsTrue(parse, "Parse failed");
             Assert.IsNotNull(result, "No instantiation");

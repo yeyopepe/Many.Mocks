@@ -61,7 +61,7 @@ var ex = noMockCouldBeGeneratedForTheseClasses.Error; //The thrown exception dur
 
 ### **How to instantiate a class injecting a bunch of mocks?**
 ```
-var mocks = typeof(UserManager).GetMocksFromConstructors(); //Get mocks
+var mocks = typeof(UserManager).GetMocksFromConstructors().Extract(); //Get just mocks
 
-var result = mocks.TryInstantiate(out UserManager result); //Get the instance
+var result = mocks.UseToTryInstantiate(out UserManager result); //Get the instance
 ```
