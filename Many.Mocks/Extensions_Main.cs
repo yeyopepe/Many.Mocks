@@ -10,12 +10,12 @@ using Moq;
 namespace Many.Mocks
 {
     /// <summary>
-    /// 
+    /// Represents extensions to handle large number of mocks
     /// </summary>
-    public static partial class Extensions
+    public static partial class Extensions_Filter
     {
         /// <summary>
-        /// Gets mocks from all constructors of a given type
+        /// Gets mocks from all constructors of a given type. Not proxiable classes will be ignored
         /// </summary>
         /// <param name="type">Type to extract mocks from</param>
         /// <param name="signature">Signature of specific constructor to scan. If null then every override is scanned for mocks</param>
@@ -51,7 +51,7 @@ namespace Many.Mocks
             return result;
         }
         /// <summary>
-        /// Gets mocks of a given method
+        /// Gets mocks of a given method. Not proxiable classes will be ignored
         /// </summary>
         /// <param name="type">Type to extract mocks from</param>
         /// <param name="methodName">Method name (case insensitive)</param>
