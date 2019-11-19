@@ -7,7 +7,7 @@ using System.Linq;
 namespace Many.Mocks.Tests
 {
     [TestFixture]
-    public partial class MockExtensionsExtensionsTestsTests
+    public partial class ExtensionsTests
     {
         [Test]
         public void GetMocks_FromConstructors_OK()
