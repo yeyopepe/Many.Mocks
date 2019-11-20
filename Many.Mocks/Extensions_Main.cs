@@ -114,7 +114,7 @@ namespace Many.Mocks
                 var ctor = typeof(T).GetConstructor(mocks.Select(p => p.Type).ToArray());
                 if (ctor == null) return false;
                 {
-                    var types = mocks.Select(p => p.Instance);
+                    var types = mocks.Select(p => p.Instance.Object);
                     result = (T)Activator.CreateInstance(typeof(T), types.ToArray());
                 }
                 return true;
@@ -146,7 +146,7 @@ namespace Many.Mocks
 
             if (toInvoke == null)
                 throw new MethodNotFoundException($"Given mocks do not match with {rightName}() parameters");
-            return (R)toInvoke.Invoke(obj, mocks.Select(p => p.Instance).ToArray());
+            return (R)toInvoke.Invoke(obj, mocks.Select(p => p.Instance.Object).ToArray());
         }
         /// <summary>
         /// Invokes a method using mocks best fit
@@ -182,13 +182,12 @@ namespace Many.Mocks
 
                 try
                 {
-                    var method = GetMockOfGenericUsingBehaviour(item);
                     if (isInterface)
                     {
                         temp.Details = new MockItem.MockDetail()
                         {
                             IsInterface = isInterface,
-                            Instance = method.Invoke(null, new object[] { behavior.Convert() }),
+                            Instance = item.ParameterType.GetMock(behavior),
                             Type = item.ParameterType
                         };
                     }
@@ -196,7 +195,7 @@ namespace Many.Mocks
                     {
                         temp.Details = new MockItem.MockDetail()
                         {
-                            Instance = method.Invoke(null, new object[] { behavior.Convert() }),
+                            Instance = item.ParameterType.GetMock(behavior),
                             Type = item.ParameterType
                         };
 
@@ -217,15 +216,24 @@ namespace Many.Mocks
         /// <summary>
         /// Gets the Behaviour override of Mock.Of generic method 
         /// </summary>
-        /// <param name="parameter">Generic parameter</param>
+        /// <param name="type">Type of mock</param>
+        /// <param name="behavior">Mock's behavior</param>
         /// <returns>Method to get Mock</returns>
         /// <exception cref="Exception"></exception>
-        private static MethodInfo GetMockOfGenericUsingBehaviour(ParameterInfo parameter)
+        private static Moq.Mock GetMock(this Type type, Behavior behavior = Behavior.Loose)
         {
-            var methods = typeof(Mock).GetMethods().Where(p => p.Name == "Of");
-            var method = methods.Where(p => p.GetParameters().Count() == 1 &&
+            var mockOfMethods = typeof(Mock).GetMethods().Where(p => p.Name == "Of");
+            var mockOfSelected = mockOfMethods.Where(p => p.GetParameters().Count() == 1 &&
                                             p.GetParameters().First().ParameterType == typeof(Moq.MockBehavior)).First();
-            return method.MakeGenericMethod(parameter.ParameterType);
+            var mockOfMethod = mockOfSelected.MakeGenericMethod(type); //Mock.Of<>
+
+            var mockedObject = mockOfMethod.Invoke(null, new object[] { behavior.Convert() });
+            
+            var mockGetMethods = typeof(Mock).GetMethods().Where(p => p.Name == "Get");
+            var mockGetSelected = mockGetMethods.Where(p => p.GetParameters().Count() == 1).First();
+            var mockGetMethod = mockGetSelected.MakeGenericMethod(type); //Mock.Get<>
+            
+            return (Moq.Mock)mockGetMethod.Invoke(null, new object[] { mockedObject });
         }
         /// <summary>
         /// Converts custom Mock's behavior to Moq's one

@@ -38,10 +38,11 @@ namespace Many.Mocks
         /// <param name="result">Found mocks</param>
         /// <param name="onlyValid">TRUE if only valid mocks should be returned. FALSE to return all whether they are valid or not</param>
         /// <returns>TRUE if at least one mock was found. FALSE otherwise</returns>
-        public static bool TryFind<T>(this Bag value, out IList<T> result, bool onlyValid = true)
+        public static bool TryFind<T>(this Bag value, out IList<Moq.Mock<T>> result, bool onlyValid = true) 
+            where T:class 
         {
             var returns = false;
-            result = new List<T>();
+            result = new List<Moq.Mock<T>>();
             try
             {
                 var temp = value.Mocks.Where(p => p.Details.Type.Equals(typeof(T)));
@@ -51,7 +52,7 @@ namespace Many.Mocks
 
                 if (temp.Any())
                 {
-                    result = temp.Select(p => (T)p.Details.Instance).ToList();
+                    result = temp.Select(p => (Moq.Mock<T>)p.Details.Instance).ToList();
                     returns = true;
                 }
                 

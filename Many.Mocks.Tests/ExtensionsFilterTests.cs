@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-
+using Moq.Protected;
 namespace Many.Mocks.Tests
 {
     [TestFixture]
@@ -19,7 +19,6 @@ namespace Many.Mocks.Tests
         public void ExtractDistinctMocks_FromMethodsWithSameTypes_ReturnsMocks()
         {
             var mocks = typeof(TestClasses.IClass5).GetMocksFrom("method");
-
             Assert.AreEqual(TestClasses.IClass5.ValidMocksInMethod, mocks.Mocks.Count(), "Number of valid mocks does not match");
             Assert.AreEqual(TestClasses.IClass5.DifferentMockTypes, mocks.ExtractDistinct().Count(), "Number of distinct mocks is not valid");
         }
@@ -35,7 +34,7 @@ namespace Many.Mocks.Tests
         public void Find_OnlyValidMocks_MocksExist_ReturnsMock()
         {
             var mocks = typeof(TestClasses.IClass5).GetMocksFrom("method");
-            var result = mocks.TryFind(out IList<TestClasses.IClass1> found);
+            var result = mocks.TryFind(out IList<Moq.Mock<TestClasses.IClass1>> found);
 
             Assert.IsTrue(result, "Error trying finding mocks");
             Assert.AreEqual(TestClasses.IClass5.IClass1Mocks, found.Count(), "Number of found mocks is not right");
@@ -44,7 +43,7 @@ namespace Many.Mocks.Tests
         public void Find_OnlyValidMocks_MocksMissing_ReturnsNothing()
         {
             var mocks = typeof(TestClasses.IClass5).GetMocksFrom("method");
-            var result = mocks.TryFind(out IList<TestClasses.IClass3> found);
+            var result = mocks.TryFind(out IList<Moq.Mock<TestClasses.IClass3>> found);
 
             Assert.IsFalse(result, "Error trying finding mocks");
         }
@@ -52,7 +51,7 @@ namespace Many.Mocks.Tests
         public void Find_AllMocks_MocksMissing_ReturnsNothing()
         {
             var mocks = typeof(TestClasses.IClass3).GetMocksFrom("Third");
-            var result = mocks.TryFind(out IList<TestClasses.SealedClass> found, false);
+            var result = mocks.TryFind(out IList<Moq.Mock<TestClasses.SealedClass>> found, false);
 
             Assert.IsFalse(result, "Error trying finding mocks");
         }
