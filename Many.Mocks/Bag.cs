@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Many.Mocks
@@ -37,7 +38,7 @@ namespace Many.Mocks
             /// </summary>
             public bool Generated { get; internal set; }
             /// <summary>
-            /// 
+            /// Error information in case of mock was not be able to generate
             /// </summary>
             public Exception Error { get; internal set; }
             /// <summary>
