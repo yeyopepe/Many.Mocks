@@ -17,7 +17,7 @@ namespace Many.Mocks
     /// <summary>
     /// Represents extensions to handle large number of mocks
     /// </summary>
-    public static partial class Extensions_Filter
+    public static partial class Extensions
     {
         /// <summary>
         /// Gets mocks from all constructors of a given type. Not proxiable classes will be ignored

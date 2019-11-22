@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Many.Mocks
 {
-    public static partial class Extensions_Filter
+    public static partial class Extensions
     {
         /// <summary>
         /// Checks whether two lists of types are equal or not
