@@ -37,7 +37,6 @@ public class UserManager : UserManager<User>
 ```
   
 ### **How to generate a bunch of mocks from any method or constructor?**
-
 1. You can get a bag of nedeed mocks just typing:
 ```
 var mocks = typeof(UserManager).GetMocksFromConstructors(); //11 mocks: 2 from ctor. 1 and 9 from ctor. 2
@@ -57,6 +56,12 @@ If a class is not proxiable and no mock can be created you can check it in the d
 ```
 var noMockCouldBeGeneratedForTheseClasses = mocks.Mocks.Where(p => !p.Generated); //Get the errors
 var ex = noMockCouldBeGeneratedForTheseClasses.Error; //The thrown exception during mock generation
+```
+
+### **How to generate a mock for every property type of a class/interface?**
+Just ask for them :)
+```
+var mocks = typeof(UserManager).GetMocksFromProperties();
 ```
 
 ### **How to instantiate a class injecting a bunch of mocks?**
