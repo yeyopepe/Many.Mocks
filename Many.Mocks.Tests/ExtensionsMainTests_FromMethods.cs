@@ -11,7 +11,7 @@ namespace Many.Mocks.Tests
     {
         [TestCase(true)]
         [TestCase(false)]
-        public void GetMocks_OK(bool caseSensitive)
+        public void GetMocks_FromMethod_OK(bool caseSensitive)
         {
             var method = caseSensitive ? "First" : "first";
             var result = typeof(TestClasses.IClass1).GetMocksFrom(method);
@@ -24,7 +24,7 @@ namespace Many.Mocks.Tests
         }
         [TestCase(true)]
         [TestCase(false)]
-        public void GetMocks_WithNotValidClass_ReturnsError(bool caseSensitive)
+        public void GetMocks_FromMethod_WithNotValidClass_ReturnsError(bool caseSensitive)
         {
             var method = caseSensitive ? "Third" : "third";
             var result = typeof(TestClasses.IClass3).GetMocksFrom(method);
@@ -36,7 +36,7 @@ namespace Many.Mocks.Tests
         }
         [TestCase(true)]
         [TestCase(false)]
-        public void GetMocks_GivenSignature_OK(bool caseSensitive)
+        public void GetMocks_FromMethod_GivenSignature_OK(bool caseSensitive)
         {
             var method = caseSensitive ? "Second" : "second";
             var result = typeof(TestClasses.IClass2).GetMocksFrom(method, new List<Type> { typeof(TestClasses.IClass2), typeof(TestClasses.IClass3) });
@@ -49,7 +49,7 @@ namespace Many.Mocks.Tests
         }
         [TestCase(true)]
         [TestCase(false)]
-        public void GetMocks_GivenInvalidSignature_ReturnsException(bool caseSensitive)
+        public void GetMocks_FromMethod_GivenInvalidSignature_ReturnsException(bool caseSensitive)
         {
             var method = caseSensitive ? "Third" : "third";
             Assert.Throws<MethodNotFoundException>(() =>

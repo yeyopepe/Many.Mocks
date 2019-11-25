@@ -42,7 +42,7 @@ namespace Many.Mocks
             /// </summary>
             public Exception Error { get; internal set; }
             /// <summary>
-            /// Method that needs the mock
+            /// Method that references the mock
             /// </summary>
             public MethodBase Source { get; internal set; }
             /// <summary>
