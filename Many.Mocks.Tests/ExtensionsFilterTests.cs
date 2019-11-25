@@ -48,12 +48,12 @@ namespace Many.Mocks.Tests
             Assert.IsFalse(result, "Error trying finding mocks");
         }
         [Test]
-        public void Find_AllMocks_MocksMissing_ReturnsNothing()
+        public void Find_AllMocks_MocksMissing_ReturnsMocks()
         {
             var mocks = typeof(TestClasses.IClass3).GetMocksFrom("Third");
             var result = mocks.TryFind(out IList<Moq.Mock<TestClasses.SealedClass>> found, false);
 
-            Assert.IsFalse(result, "Error trying finding mocks");
+            Assert.IsTrue(result, "Error trying finding mocks");
         }
     }
 }

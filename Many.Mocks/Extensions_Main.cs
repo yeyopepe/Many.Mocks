@@ -8,12 +8,7 @@ using static Many.Mocks.Bag.MockItem;
 using Moq;
 
 namespace Many.Mocks
-{
-    public enum Behavior
-    {
-        Loose,
-        Strict
-    }
+{    
     /// <summary>
     /// Represents extensions to handle large number of mocks
     /// </summary>
@@ -199,43 +194,8 @@ namespace Many.Mocks
         {
             var result = new List<MockItem>();
             foreach (var item in sourceMethod.GetParameters())
-            {
-                var temp = new MockItem();
-                temp.Source = sourceMethod;
-
-                var isInterface = item.ParameterType.IsInterface ? true : false;
-
-                try
-                {
-                    if (isInterface)
-                    {
-                        temp.Details = new MockItem.MockDetail()
-                        {
-                            IsInterface = isInterface,
-                            Instance = item.ParameterType.GetMock(behavior),
-                            Type = item.ParameterType
-                        };
-                    }
-                    else
-                    {
-                        temp.Details = new MockItem.MockDetail()
-                        {
-                            Instance = item.ParameterType.GetMock(behavior),
-                            Type = item.ParameterType
-                        };
-
-                    }
-                    temp.Generated = true;
-                }
-                catch (Exception ex)
-                {
-                    temp.Error = ex.InnerException ?? ex;
-                }
-                finally
-                {
-                    result.Add(temp);
-                }
-            }
+                result.Add(item.ParameterType.GetMockItem(sourceMethod, behavior));
+            
             return result;
         }
         /// <summary>
@@ -259,23 +219,6 @@ namespace Many.Mocks
             var mockGetMethod = mockGetSelected.MakeGenericMethod(type); //Mock.Get<>
 
             return (Moq.Mock)mockGetMethod.Invoke(null, new object[] { mockedObject });
-        }
-        /// <summary>
-        /// Converts custom Mock's behavior to Moq's one
-        /// </summary>
-        /// <param name="behavior">Behavior</param>
-        /// <returns>Moq's behavior</returns>
-        private static Moq.MockBehavior Convert(this Behavior behavior)
-        {
-            switch (behavior)
-            {
-                case Behavior.Loose:
-                    return MockBehavior.Loose;
-                case Behavior.Strict:
-                    return MockBehavior.Strict;
-                default:
-                    throw new NotImplementedException(nameof(behavior));
-            }
         }
         /// <summary>
         /// Gets the mock item of a given type
@@ -309,7 +252,7 @@ namespace Many.Mocks
                         IsInterface = type.IsInterface,
                         Type = type
                     },
-                    Error = ex,
+                    Error = ex.InnerException ?? ex,
                     Source = sourceMethod
                 };
             }
