@@ -21,17 +21,6 @@ namespace Many.Mocks
             return value;
         }
         /// <summary>
-        /// Extracts just the mocks from a given bag
-        /// </summary>
-        /// <param name="value">Mocks bag</param>
-        /// <returns>List of unique mocks</returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static HashSet<MockDetail> Extract(this Bag value)
-        {
-            var content = value.Mocks.Select(p => p.Details);
-            return new HashSet<MockDetail>(content);
-        }
-        /// <summary>
         /// Tries to find mocks of given type
         /// </summary>
         /// <typeparam name="T">Mock type</typeparam>

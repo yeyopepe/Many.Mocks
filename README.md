@@ -36,7 +36,7 @@ public class UserManager : UserManager<User>
     }
 ```
   
-### **How to generate a bunch of mocks from any method or constructor?**
+### **How to generate a bag of mocks from any method or constructor?**
 1. You can get a bag of nedeed mocks just typing:
 ```
 var mocks = typeof(UserManager).GetMocksFromConstructors(); //11 mocks: 2 from ctor. 1 and 9 from ctor. 2
@@ -64,9 +64,9 @@ Just ask for them :)
 var mocks = typeof(UserManager).GetMocksFromProperties();
 ```
 
-### **How to instantiate a class injecting a bunch of mocks?**
+### **How to instantiate a class injecting a bag of mocks?**
 ```
-var mocks = typeof(UserManager).GetMocksFromConstructors().Extract(); //Get just mocks
+var mocks = typeof(UserManager).GetMocksFromConstructors().Mocks.Select(p => p.Details); //Get mocks from constructor
 
 var result = mocks.UseToTryInstantiate(out UserManager result); //Get the instance
 ```

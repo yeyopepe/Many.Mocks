@@ -11,8 +11,7 @@ namespace Many.Mocks.Tests
         {
             var mocks = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors()
                                                         .Distinct().Mocks
-                                                        .Select(p => p.Details)
-                                                        .ToHashSet();
+                                                        .Select(p => p.Details);
             
             var parse = mocks.UseToTryInstantiate(out TestClasses.ImplIClass3 result);
             
@@ -24,8 +23,7 @@ namespace Many.Mocks.Tests
         {
             var mocks = typeof(TestClasses.ImplIClass3Bis).GetMocksFromConstructors()
                                                         .Distinct().Mocks
-                                                        .Select(p => p.Details)
-                                                        .ToHashSet();
+                                                        .Select(p => p.Details);
             var parse = mocks.UseToTryInstantiate(out TestClasses.ImplIClass3Bis result);
 
             Assert.IsTrue(parse, "Parse failed");

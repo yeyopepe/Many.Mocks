@@ -21,15 +21,7 @@ namespace Many.Mocks.Tests
             var mocks = typeof(TestClasses.IClass5).GetMocksFrom("method");
             Assert.AreEqual(TestClasses.IClass5.ValidMocksInMethod, mocks.Mocks.Count(), "Number of valid mocks does not match");
             Assert.AreEqual(TestClasses.IClass5.DifferentMockTypes, mocks.Distinct().Mocks.Count(), "Number of distinct mocks is not valid");
-        }
-        [Test]
-        public void ExtractMocks_ReturnsMocks()
-        {
-            var mocks = typeof(TestClasses.IClass5).GetMocksFrom("method");
-
-            Assert.AreEqual(TestClasses.IClass5.ValidMocksInMethod, mocks.Mocks.Count(), "Number of valid mocks does not match");
-            Assert.AreEqual(TestClasses.IClass5.ValidMocksInMethod, mocks.Extract().Count(), "Number of valid extracted mocks does not match");
-        }
+        }        
         [Test]
         public void Find_OnlyValidMocks_MocksExist_ReturnsMock()
         {

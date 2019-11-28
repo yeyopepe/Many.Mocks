@@ -13,8 +13,7 @@ namespace Many.Mocks.Tests
             var obj = new TestClasses.ImplIClass2(null);
             var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
                                                         .Distinct()
-                                                        .Mocks.Select(p=> p.Details)
-                                                        .ToHashSet();
+                                                        .Mocks.Select(p => p.Details);
             
             Assert.IsTrue(mocks.Invoke<TestClasses.ImplIClass2, bool>("second", obj), "Invoked method has something wrong");
         }
@@ -24,8 +23,7 @@ namespace Many.Mocks.Tests
             var obj = new TestClasses.ImplIClass2(null);
             var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
                                                         .Distinct()
-                                                        .Mocks.Select(p => p.Details)
-                                                        .ToHashSet();
+                                                        .Mocks.Select(p => p.Details);
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
@@ -38,9 +36,8 @@ namespace Many.Mocks.Tests
             var obj = new TestClasses.ImplIClass2(null);
             var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
                                                         .Distinct()
-                                                        .Mocks.Select(p => p.Details)
-                                                        .ToHashSet();
-            mocks.Clear();
+                                                        .Mocks.Select(p => p.Details);
+            mocks = mocks.Where(p => false); //empty list
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
@@ -53,8 +50,7 @@ namespace Many.Mocks.Tests
             var obj = new TestClasses.ImplIClass2(null);
             var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
                                                         .Distinct()
-                                                        .Mocks.Select(p => p.Details)
-                                                        .ToHashSet();
+                                                        .Mocks.Select(p => p.Details);
 
             Assert.DoesNotThrow(() =>
             {
@@ -67,8 +63,7 @@ namespace Many.Mocks.Tests
             var obj = new TestClasses.ImplIClass2(null);
             var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
                                                         .Distinct()
-                                                        .Mocks.Select(p => p.Details)
-                                                        .ToHashSet();
+                                                        .Mocks.Select(p => p.Details);
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
@@ -81,9 +76,8 @@ namespace Many.Mocks.Tests
             var obj = new TestClasses.ImplIClass2(null);
             var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
                                                         .Distinct()
-                                                        .Mocks.Select(p => p.Details)
-                                                        .ToHashSet();
-            mocks.Clear();
+                                                        .Mocks.Select(p => p.Details);
+            mocks = mocks.Where(p => false); //empty list
 
             Assert.Throws<MethodNotFoundException>(() =>
             {

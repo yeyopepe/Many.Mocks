@@ -127,7 +127,7 @@ namespace Many.Mocks
         /// <param name="mocks">Mocks to use in constructor</param>
         /// <param name="result">Instance if process is successful</param>
         /// <returns>TRUE if we can get an instance. FALSE otherwise</returns>
-        public static bool UseToTryInstantiate<T>(this HashSet<MockDetail> mocks, out T result)
+        public static bool UseToTryInstantiate<T>(this IEnumerable<MockDetail> mocks, out T result)
         {
             result = default(T);
             try
@@ -156,7 +156,7 @@ namespace Many.Mocks
         /// <exception cref="TargetException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="Exception"></exception>
-        public static R Invoke<T, R>(this HashSet<MockDetail> mocks, string method, T obj)
+        public static R Invoke<T, R>(this IEnumerable<MockDetail> mocks, string method, T obj)
         {
             var methods = typeof(T).GetMethods().Where(p => p.Name.Equals(method, StringComparison.InvariantCultureIgnoreCase));
             if (methods == null || !methods.Any())
@@ -181,7 +181,7 @@ namespace Many.Mocks
         /// <exception cref="TargetException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="Exception"></exception>
-        public static void Invoke<T>(this HashSet<MockDetail> mocks, string method, T obj)
+        public static void Invoke<T>(this IEnumerable<MockDetail> mocks, string method, T obj)
         {
             _ = mocks.Invoke<T, object>(method, obj);
         }
