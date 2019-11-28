@@ -9,4 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Bag.ExtractDistinct() is renamed to just Distinct() and now returns the modified Bag.
 
+### Removed
+- Useless Extract() method
+
 [Unreleased]: https://github.com/yeyopepe/Many.Mocks/compare/0.3.7...HEAD
