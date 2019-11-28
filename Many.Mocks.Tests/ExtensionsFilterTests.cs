@@ -8,7 +8,7 @@ namespace Many.Mocks.Tests
     partial class ExtensionsTests
     {
         [Test]
-        public void ExtractDistinctMocks_FromMethodWithDuplicates_ReturnsMocks()
+        public void ExtractDistinctMocks_FromOneMethod_WithDuplicates_ReturnsMocks()
         {
             var mocks = typeof(TestClasses.IClass4).GetMocksFrom("method");
 
@@ -16,12 +16,24 @@ namespace Many.Mocks.Tests
             Assert.AreEqual(TestClasses.IClass4.DifferentMockTypes, mocks.Distinct().Mocks.Count(), "Number of distinct mocks is not valid");
         }
         [Test]
-        public void ExtractDistinctMocks_FromMethodsWithSameTypes_ReturnsMocks()
+        public void ExtractDistinctMocks_FromSeveralMethods_WithDuplicates_ReturnsMocks()
         {
             var mocks = typeof(TestClasses.IClass5).GetMocksFrom("method");
             Assert.AreEqual(TestClasses.IClass5.ValidMocksInMethod, mocks.Mocks.Count(), "Number of valid mocks does not match");
             Assert.AreEqual(TestClasses.IClass5.DifferentMockTypes, mocks.Distinct().Mocks.Count(), "Number of distinct mocks is not valid");
-        }        
+        } 
+        [Test]
+        public void ExtractDistinctMocks_OnlyValid_WithErrors_ReturnsNothing()
+        {
+            var mocks = typeof(TestClasses.IClass3).GetMocksFrom("Third");
+            Assert.AreEqual(0, mocks.Distinct(true).Mocks.Count(), "Number of valid mocks does not match");
+        }
+        [Test]
+        public void ExtractDistinctMocks_All_WithErrors_ReturnsMocks()
+        {
+            var mocks = typeof(TestClasses.IClass3).GetMocksFrom("Third");
+            Assert.AreEqual(TestClasses.IClass3.NotValidMocksInMethod, mocks.Distinct(false).Mocks.Count(), "Number of valid mocks does not match");
+        }
         [Test]
         public void Find_OnlyValidMocks_MocksExist_ReturnsMock()
         {

@@ -13,10 +13,14 @@ namespace Many.Mocks
         /// Searches the distinct mocks from a given bag
         /// </summary>
         /// <param name="value">Mocks bag</param>
+        /// <param name="onlyValid">TRUE if you want to get only valid mocks in given bag. FALSE to get valid and invalid ones</param>
         /// <returns>Bag with only distinct mocks</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static Bag Distinct(this Bag value)
+        public static Bag Distinct(this Bag value, bool onlyValid=true)
         {
+            if (onlyValid)
+                value.Mocks = value.Mocks.Where(p => p.Generated);
+
             value.Mocks = value.Mocks.Distinct<MockItem>(new MockEqualityComparer());
             return value;
         }
