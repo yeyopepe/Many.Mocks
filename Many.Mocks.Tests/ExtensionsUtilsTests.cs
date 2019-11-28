@@ -5,7 +5,7 @@ using Many.Mocks.Utils;
 namespace Many.Mocks.Tests
 {
     [TestFixture]
-    partial class ExtensionsTests
+    partial class ExtensionsUtilsTests
     {
         [Test]
         public void Compare_SameTypeLists_ReturnsTrue()

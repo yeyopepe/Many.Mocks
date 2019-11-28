@@ -7,7 +7,7 @@ using static Many.Mocks.Bag.MockItem;
 
 namespace Many.Mocks
 {
-    public static partial class Extensions
+    public static class Filters
     {
         /// <summary>
         /// Searches the distinct mocks from a given bag

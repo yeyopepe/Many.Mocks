@@ -5,7 +5,7 @@ using System.Linq;
 namespace Many.Mocks.Tests
 {
     [TestFixture]
-    public partial class ExtensionsTests
+    public class MocksTests_Invoke
     {
         [Test]
         public void Invoke_ValidParameters_ReturnsResult()

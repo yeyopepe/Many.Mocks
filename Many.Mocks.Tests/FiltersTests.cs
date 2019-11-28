@@ -5,7 +5,7 @@ using Moq.Protected;
 namespace Many.Mocks.Tests
 {
     [TestFixture]
-    partial class ExtensionsTests
+    partial class FiltersTests
     {
         [Test]
         public void ExtractDistinctMocks_FromOneMethod_WithDuplicates_ReturnsMocks()

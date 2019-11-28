@@ -4,7 +4,7 @@ using System.Linq;
 namespace Many.Mocks.Tests
 {
     [TestFixture]
-    public partial class ExtensionsTests
+    public class MocksTests_FromProperties
     {
         [Test]
         public void GetMocks_FromTypeProperties_OK()
