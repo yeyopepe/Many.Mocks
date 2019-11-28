@@ -6,6 +6,7 @@ using System.Reflection;
 using static Many.Mocks.Bag;
 using static Many.Mocks.Bag.MockItem;
 using Moq;
+using Many.Mocks.Utils;
 
 namespace Many.Mocks
 {    

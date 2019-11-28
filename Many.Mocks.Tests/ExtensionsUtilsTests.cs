@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-
+using Many.Mocks.Utils;
 namespace Many.Mocks.Tests
 {
     [TestFixture]

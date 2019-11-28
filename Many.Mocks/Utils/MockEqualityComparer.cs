@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
+using static Many.Mocks.Bag;
 using static Many.Mocks.Bag.MockItem;
 
 namespace Many.Mocks.Utils
 {
-    class MockEqualityComparer : IEqualityComparer<MockDetail>
+    class MockEqualityComparer : IEqualityComparer<MockItem>
     {
-        public bool Equals(MockDetail x, MockDetail y)
+        public bool Equals(MockItem x, MockItem y)
         {
-            return x.Type == y.Type;
+            return x.Details.Type == y.Details.Type;
         }
 
-        public int GetHashCode(MockDetail obj)
+        public int GetHashCode(MockItem obj)
         {
             int hash = 13;
-            hash = (hash * 7) + obj.Type.GetHashCode();
+            hash = (hash * 7) + obj.Details.Type.GetHashCode();
             return hash;
         }
     }

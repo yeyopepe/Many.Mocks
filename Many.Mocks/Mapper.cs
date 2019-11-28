@@ -12,20 +12,26 @@ namespace Many.Mocks
     /// </summary>
     public enum Behavior
     {
+        /// <summary>
+        /// Will never throw exceptions, returning default values when necessary (null for reference types, zero for value types or empty enumerables and arrays).
+        /// </summary>
         Loose,
+        /// <summary>
+        /// Causes the mock to always throw an exception for invocations that don't have a corresponding setup.
+        /// </summary>
         Strict
     }
     /// <summary>
     /// Represents a group of mapper methods
     /// </summary>
-    public static class Mapper
+    internal static class Mapper
     {
         /// <summary>
         /// Converts custom Mock's behavior to Moq's one
         /// </summary>
         /// <param name="behavior">Behavior</param>
         /// <returns>Moq's behavior</returns>
-        internal static Moq.MockBehavior Convert(this Behavior behavior)
+        public static Moq.MockBehavior Convert(this Behavior behavior)
         {
             switch (behavior)
             {

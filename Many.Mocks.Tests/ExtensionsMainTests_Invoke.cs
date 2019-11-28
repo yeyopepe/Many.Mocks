@@ -1,5 +1,6 @@
 ﻿using Many.Mocks.Exceptions;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Many.Mocks.Tests
 {
@@ -10,15 +11,21 @@ namespace Many.Mocks.Tests
         public void Invoke_ValidParameters_ReturnsResult()
         {
             var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second").ExtractDistinct();
-
+            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
+                                                        .Distinct()
+                                                        .Mocks.Select(p=> p.Details)
+                                                        .ToHashSet();
+            
             Assert.IsTrue(mocks.Invoke<TestClasses.ImplIClass2, bool>("second", obj), "Invoked method has something wrong");
         }
         [Test]
         public void Invoke_InvalidMethod_ReturnsException()
         {
             var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second").ExtractDistinct();
+            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
+                                                        .Distinct()
+                                                        .Mocks.Select(p => p.Details)
+                                                        .ToHashSet();
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
@@ -29,7 +36,10 @@ namespace Many.Mocks.Tests
         public void Invoke_SignatureDoesNotMatch_ReturnsException()
         {
             var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second").ExtractDistinct();
+            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
+                                                        .Distinct()
+                                                        .Mocks.Select(p => p.Details)
+                                                        .ToHashSet();
             mocks.Clear();
 
             Assert.Throws<MethodNotFoundException>(() =>
@@ -41,7 +51,10 @@ namespace Many.Mocks.Tests
         public void VoidInvoke_ValidParameters_EndsWithoutException()
         {
             var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond").ExtractDistinct();
+            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
+                                                        .Distinct()
+                                                        .Mocks.Select(p => p.Details)
+                                                        .ToHashSet();
 
             Assert.DoesNotThrow(() =>
             {
@@ -52,7 +65,10 @@ namespace Many.Mocks.Tests
         public void VoidInvoke_InvalidMethod_ReturnsException()
         {
             var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond").ExtractDistinct();
+            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
+                                                        .Distinct()
+                                                        .Mocks.Select(p => p.Details)
+                                                        .ToHashSet();
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
@@ -63,7 +79,10 @@ namespace Many.Mocks.Tests
         public void VoidInvoke_SignatureDoesNotMatch_ReturnsException()
         {
             var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond").ExtractDistinct();
+            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
+                                                        .Distinct()
+                                                        .Mocks.Select(p => p.Details)
+                                                        .ToHashSet();
             mocks.Clear();
 
             Assert.Throws<MethodNotFoundException>(() =>
