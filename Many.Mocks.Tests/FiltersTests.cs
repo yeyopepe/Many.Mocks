@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Moq.Protected;
+using Many.Mocks.Exceptions;
+
 namespace Many.Mocks.Tests
 {
     [TestFixture]
@@ -58,6 +60,32 @@ namespace Many.Mocks.Tests
             var result = mocks.TryFind(out IList<Moq.Mock<TestClasses.SealedClass>> found, false);
 
             Assert.IsTrue(result, "Error trying finding mocks");
+        }
+        [Test]
+        public void FindFirst_ReturnsMock()
+        {
+            var mocks = typeof(TestClasses.IClass4).GetMocksFrom("Method");
+            var result = mocks.First<TestClasses.IClass1>();
+
+            Assert.IsNotNull(result, "Mock not found");
+        }       
+        [Test]
+        public void FindFirst_NotFound_ThrowsException()
+        {
+            var mocks = typeof(TestClasses.IClass4).GetMocksFrom("Method");
+            Assert.Throws<ValidMockNotFoundException>(() => mocks.First<TestClasses.IClass5>());
+        }
+        [Test]
+        public void Count_ValidMocks_ReturnsCount()
+        {
+            var mocks = typeof(TestClasses.IClass4).GetMocksFrom("Method");
+            var result2 = mocks.Count<TestClasses.IClass1>();
+            var result1 = mocks.Count<TestClasses.IClass2>();
+            var result0 = mocks.Count<TestClasses.IClass3>();
+
+            Assert.AreEqual(1, result1);
+            Assert.AreEqual(2, result2);
+            Assert.AreEqual(0, result0);
         }
     }
 }
