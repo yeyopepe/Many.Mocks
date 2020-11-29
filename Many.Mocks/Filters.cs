@@ -1,4 +1,5 @@
-﻿using Many.Mocks.Utils;
+﻿using Many.Mocks.Exceptions;
+using Many.Mocks.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,38 @@ namespace Many.Mocks
 
             value.Mocks = value.Mocks.Distinct<MockItem>(new MockEqualityComparer());
             return value;
+        }
+        /// <summary>
+        /// Gets the number of mocks in a bag
+        /// </summary>
+        /// <typeparam name="T">Mock type</typeparam>
+        /// <param name="value">Mocks bag</param>
+        /// <param name="onlyValid">TRUE if only valid mocks should be returned. FALSE to return all whether they are valid or not</param>
+        /// <returns>Number of mocks</returns>
+        public static int Count<T>(this Bag value, bool onlyValid = true)
+            where T : class
+        {
+            if (value.TryFind<T>(out IList<Moq.Mock<T>> found, onlyValid))
+            {
+                return found.Count;
+            }
+            return 0;
+        }
+        /// <summary>
+        /// Finds the first valid mock of given type
+        /// </summary>
+        /// <typeparam name="T">Mock type</typeparam>
+        /// <param name="value">Mocks bag</param>
+        /// <returns>Found mock</returns>
+        /// <exception cref="ValidMockNotFoundException"></exception>
+        public static Moq.Mock<T> First<T>(this Bag value)
+            where T: class
+        {
+            if (value.TryFind<T>(out IList<Moq.Mock<T>> found, true))
+            {
+                return found.First();
+            }
+            throw new ValidMockNotFoundException($"Mock of {typeof(T)} not found");
         }
         /// <summary>
         /// Tries to find mocks of given type
