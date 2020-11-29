@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Many.Mocks.Tests.TestClasses
+﻿namespace Many.Mocks.Tests.TestClasses
 {
     public class ImplIClass2 :IClass2
     {
@@ -10,6 +8,10 @@ namespace Many.Mocks.Tests.TestClasses
         { 
         }
 
+        public bool First()
+        {
+            return true;
+        }
         public bool Second(IClass2 class2, IClass3 class3)
         {
             return true;

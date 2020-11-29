@@ -1,7 +1,5 @@
-﻿using Many.Mocks.Utils;
-using Moq;
+﻿using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using static Many.Mocks.Bag.MockItem;
 
@@ -31,6 +29,7 @@ namespace Many.Mocks
         /// </summary>
         /// <param name="behavior">Behavior</param>
         /// <returns>Moq's behavior</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static Moq.MockBehavior Convert(this Behavior behavior)
         {
             switch (behavior)
@@ -42,6 +41,22 @@ namespace Many.Mocks
                 default:
                     throw new NotImplementedException(nameof(behavior));
             }
+        }
+        /// <summary>
+        /// Converts a Mock
+        /// </summary>
+        /// <param name="value">Original mock</param>
+        /// <returns>Mock desatils</returns>
+        /// <exception cref="Exception"></exception>
+        public static MockDetail Convert(this Mock value)
+        {
+            var originalType = value.GetType().GetGenericArguments().First();
+            return new MockDetail()
+            {
+                Instance = value, 
+                IsInterface= originalType.IsInterface,
+                Type = originalType
+            };
         }
 
     }

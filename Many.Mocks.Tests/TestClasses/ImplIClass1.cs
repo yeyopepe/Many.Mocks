@@ -15,9 +15,9 @@ namespace Many.Mocks.Tests.TestClasses
 
         public int PropInt => throw new NotImplementedException();
 
-        public void First()
+        public bool First()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

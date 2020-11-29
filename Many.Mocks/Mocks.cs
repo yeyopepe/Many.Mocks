@@ -9,7 +9,7 @@ using Moq;
 using Many.Mocks.Utils;
 
 namespace Many.Mocks
-{    
+{
     /// <summary>
     /// Represents extensions to handle large number of mocks
     /// </summary>
@@ -119,9 +119,65 @@ namespace Many.Mocks
             result.Mocks = mocks;
             return result;
         }
-
         /// <summary>
-        /// Tries to get an instance using a constructor best fits with given mocks
+        /// Tries to get an instance using the constructor fits with given ordered mocks
+        /// </summary>
+        /// <typeparam name="T">Type to instantiate</typeparam>
+        /// <param name="mocks">Mocks to use in constructor</param>
+        /// <param name="result">Instance if process is successful</param>
+        /// <returns>TRUE if we can get an instance. FALSE otherwise</returns>
+        public static bool UseToTryInstantiate<T>(this IEnumerable<Mock> mocks, out T result)
+        {
+            result = default(T);
+            try
+            {
+                var ctor = typeof(T).GetConstructor(mocks.Select(p => p.GetType().GetGenericArguments().First()).ToArray());
+                if (ctor == null) return false;
+                {
+                    var types = mocks.Select(p => p.Object);
+                    result = (T)Activator.CreateInstance(typeof(T), types.ToArray());
+                }
+                return true;
+            }
+            catch { return false; }
+        }
+        /// <summary>
+        /// Tries to get an instance using the constructor fits with given ordered mocks
+        /// </summary>
+        /// <typeparam name="T">Type to instantiate</typeparam>
+        /// <param name="mocks">Mocks to use in constructor</param>
+        /// <param name="customMocks">Custom mocks to be used during the operation replacing the originals</param>
+        /// <param name="result">Instance if process is successful</param>
+        /// <returns>TRUE if we can get an instance. FALSE otherwise</returns>
+        public static bool UseToTryInstantiate<T>(this IEnumerable<Mock> mocks, IEnumerable<Mock> customMocks, out T result)
+        {
+            result = default(T);
+            if (customMocks != null &&
+                customMocks.Any())
+            {
+                var filteredMocks = new List<Mock>();
+                foreach (var mock in mocks)
+                {
+                    var replace = customMocks.FirstOrDefault(p => p.GetType().Equals(mock.GetType()));
+                    if (replace != null)
+                    {
+                        filteredMocks.Add(replace);
+                    }
+                    else
+                    {
+                        filteredMocks.Add(mock);
+                    }
+                }
+                return mocks.UseToTryInstantiate<T>(out result);
+            }
+            else
+            {
+                return mocks.UseToTryInstantiate<T>(out result);
+            }
+
+        }
+        /// <summary>
+        /// Tries to get an instance using the constructor fits with given ordered mocks
         /// </summary>
         /// <typeparam name="T">Type to instantiate</typeparam>
         /// <param name="mocks">Mocks to use in constructor</param>
@@ -129,19 +185,21 @@ namespace Many.Mocks
         /// <returns>TRUE if we can get an instance. FALSE otherwise</returns>
         public static bool UseToTryInstantiate<T>(this IEnumerable<MockDetail> mocks, out T result)
         {
-            result = default(T);
-            try
-            {
-                var ctor = typeof(T).GetConstructor(mocks.Select(p => p.Type).ToArray());
-                if (ctor == null) return false;
-                {
-                    var types = mocks.Select(p => p.Instance.Object);
-                    result = (T)Activator.CreateInstance(typeof(T), types.ToArray());
-                }
-                return true;
-            }
-            catch { return false; }
+            return mocks.Select(p => p.Instance).UseToTryInstantiate<T>(out result);
         }
+        /// <summary>
+        /// Tries to get an instance using the constructor fits with given ordered mocks
+        /// </summary>
+        /// <typeparam name="T">Type to instantiate</typeparam>
+        /// <param name="mocks">Mocks to use in constructor</param>
+        /// <param name="customMocks">Custom mocks to be used during the operation replacing the originals</param>
+        /// <param name="result">Instance if process is successful</param>
+        /// <returns>TRUE if we can get an instance. FALSE otherwise</returns>
+        public static bool UseToTryInstantiate<T>(this IEnumerable<MockDetail> mocks, IEnumerable<Mock> customMocks, out T result)
+        {
+            return mocks.Select(p => p.Instance).UseToTryInstantiate<T>(customMocks, out result);
+        }
+
         /// <summary>
         /// Invokes a method using mocks best fit
         /// </summary>
@@ -196,7 +254,7 @@ namespace Many.Mocks
             var result = new List<MockItem>();
             foreach (var item in sourceMethod.GetParameters())
                 result.Add(item.ParameterType.GetMockItem(sourceMethod, behavior));
-            
+
             return result;
         }
         /// <summary>
@@ -239,7 +297,7 @@ namespace Many.Mocks
                         IsInterface = type.IsInterface,
                         Type = type,
                         Instance = type.GetMock(behavior)
-                    }, 
+                    },
                     Generated = true,
                     Source = sourceMethod
                 };

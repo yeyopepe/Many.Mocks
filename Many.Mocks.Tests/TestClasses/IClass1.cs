@@ -12,6 +12,6 @@
         SealedClass PropSealedClass { get; }
         int PropInt { get;
         }
-        void First();
+        bool First();
     }
 }

@@ -1,6 +1,4 @@
-﻿using Many.Mocks.Exceptions;
-using NUnit.Framework;
-using System.Linq;
+﻿using NUnit.Framework;
 
 namespace Many.Mocks.Tests
 {
