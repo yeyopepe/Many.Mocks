@@ -3,7 +3,7 @@
   <metadata>
     <id>Many.Mocks</id>
 	<title>Moq extensions to handle many mocks</title>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <authors>Sergio José Martínez Primiani</authors>
     <owners>Sergio José Martínez Primiani</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -22,11 +22,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Many.Mocks\bin\Release\net462\Many.Mocks.dll" target="lib\net462\Many.Mocks.dll" />
-    <file src="Many.Mocks\bin\Release\net462\Many.Mocks.xml" target="lib\net462\Many.Mocks.xml" />
-	<file src="Many.Mocks\bin\Release\net462\Many.Mocks.pdb" target="lib\net462\Many.Mocks.pdb" />
-    <file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.dll" target="lib\netstandard2.0\Many.Mocks.dll" />
-    <file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.xml" target="lib\netstandard2.0\Many.Mocks.xml" />
-	<file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.pdb" target="lib\netstandard2.0\Many.Mocks.pdb" />
+    <file src="Many.Mocks\bin\Release\net462\Many.Mocks.*" target="lib\net462\Many.Mocks.dll" />
+    <file src="Many.Mocks\bin\Release\netstandard2.0\Many.Mocks.*" target="lib\netstandard2.0\Many.Mocks.dll" />
   </files>
 </package>
