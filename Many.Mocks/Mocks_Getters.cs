@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using static Many.Mocks.Bag;
-using static Many.Mocks.Bag.MockItem;
 using Moq;
 using Many.Mocks.Utils;
+using static Many.Mocks.MockItem;
 
 namespace Many.Mocks
 {
@@ -31,6 +30,7 @@ namespace Many.Mocks
             var mocks = new List<MockItem>();
 
             var ctors = type.GetConstructors().AsEnumerable();
+            
             if (ctors == null || !ctors.Any())
                 throw new MethodNotFoundException($"There is no constructor for {type.FullName}.");
 
@@ -140,7 +140,7 @@ namespace Many.Mocks
         /// <param name="behavior">Mock's behavior</param>
         /// <returns>Method to get Mock</returns>
         /// <exception cref="Exception"></exception>
-        private static Moq.Mock GetMock(this Type type, Behavior behavior = Behavior.Loose)
+        private static Mock GetMock(this Type type, Behavior behavior = Behavior.Loose)
         {
             var mockOfMethods = typeof(Mock).GetMethods().Where(p => p.Name == "Of");
             var mockOfSelected = mockOfMethods.Where(p => p.GetParameters().Count() == 1 &&
@@ -153,7 +153,7 @@ namespace Many.Mocks
             var mockGetSelected = mockGetMethods.Where(p => p.GetParameters().Count() == 1).First();
             var mockGetMethod = mockGetSelected.MakeGenericMethod(type); //Mock.Get<>
 
-            return (Moq.Mock)mockGetMethod.Invoke(null, new object[] { mockedObject });
+            return (Mock)mockGetMethod.Invoke(null, new object[] { mockedObject });
         }
         /// <summary>
         /// Gets the mock item of a given type

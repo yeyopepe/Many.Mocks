@@ -3,10 +3,12 @@ using Many.Mocks.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Many.Mocks.Bag;
 
 namespace Many.Mocks
 {
+    /// <summary>
+    /// Represents a set of filters for mock bags
+    /// </summary>
     public static class Filters
     {
         /// <summary>

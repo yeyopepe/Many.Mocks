@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static Many.Mocks.Bag;
 
 namespace Many.Mocks.Utils
 {

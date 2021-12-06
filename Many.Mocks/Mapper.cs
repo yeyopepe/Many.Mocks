@@ -1,7 +1,7 @@
 ﻿using Moq;
 using System;
 using System.Linq;
-using static Many.Mocks.Bag.MockItem;
+using static Many.Mocks.MockItem;
 
 namespace Many.Mocks
 {
@@ -20,7 +20,7 @@ namespace Many.Mocks
         Strict
     }
     /// <summary>
-    /// Represents a group of mapper methods
+    /// Represents a group of mapping methods
     /// </summary>
     internal static class Mapper
     {
@@ -30,7 +30,7 @@ namespace Many.Mocks
         /// <param name="behavior">Behavior</param>
         /// <returns>Moq's behavior</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static Moq.MockBehavior Convert(this Behavior behavior)
+        public static MockBehavior Convert(this Behavior behavior)
         {
             switch (behavior)
             {

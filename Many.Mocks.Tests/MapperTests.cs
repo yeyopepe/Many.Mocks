@@ -2,7 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using System;
-using static Many.Mocks.Bag.MockItem;
+using static Many.Mocks.MockItem;
 
 namespace Many.Mocks.Tests
 {
@@ -13,7 +13,7 @@ namespace Many.Mocks.Tests
         [TestCase(false)]
         public void Convert_Mock_ReturnsMockDetails(bool isInterface)
         {
-            MockDetail result = default(MockDetail);
+            var result = default(MockDetail);
             Type mockType = null;
             Mock m = null;
             if (isInterface)

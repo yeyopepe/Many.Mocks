@@ -17,20 +17,22 @@ namespace Many.Mocks.Utils
         /// <returns>TRUE if both lists has same ordered types. FALSE otherwise</returns>
         public static bool IsEquivalentTo(this IEnumerable<Type> obj1, IEnumerable<Type> obj2)
         {
-               var result = true;
-            if (obj1 != null && obj2 != null &&
-                obj1.Count() == obj2.Count())
+            var result = true;
+
+            if (obj1 == null && obj2 == null)
+                return true;
+
+            if (obj1.Count() != obj2.Count())
+                return false;
+
+            for (int i = 0; i < obj1.Count(); i++)
             {
-                for (int i = 0; i < obj1.Count(); i++)
+                if (obj1.ElementAt(i) != obj2.ElementAt(i))
                 {
-                    if (obj1.ElementAt(i) != obj2.ElementAt(i))
-                    {
-                        result = false;
-                        break;
-                    }
+                    result = false;
+                    break;
                 }
             }
-            else return false;
 
             return result;
         }

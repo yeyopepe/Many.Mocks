@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
 using Many.Mocks.Benchmarks.TestClasses;
 
 namespace Many.Mocks.Benchmarks
