@@ -12,6 +12,7 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl></RepositoryUrl>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageLicenseFile>D:\repos\Many.Mocks\LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
@@ -21,15 +22,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <DocumentationFile>bin\$(Configuration)\netstandard2.0\Many.Mocks.xml</DocumentationFile>
   </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net462|AnyCPU'">
-    <DocumentationFile>bin\$(Configuration)\net462\Many.Mocks.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
-    <DocumentationFile>bin\$(Configuration)\net462\Many.Mocks.xml</DocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
     <PackageReference Include="Moq" Version="4.13.1" />

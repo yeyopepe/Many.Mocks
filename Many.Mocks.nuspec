@@ -1,31 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
-  <metadata>
-    <id>Many.Mocks</id>
-	<title>Moq extensions to handle many mocks</title>
-    <version>2.0.0</version>
-    <authors>Sergio José Martínez Primiani</authors>
-    <owners>Sergio José Martínez Primiani</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/yeyopepe/Many.Mocks</projectUrl>
-    <iconUrl>https://www.nuget.org/Content/gallery/img/default-package-icon.svg</iconUrl>
-    <description>Time-saving extensions to create and setup large number of mocks using Moq framework.</description>
-    <tags>moq tdd mocking mocks unittesting agile unittest extensions</tags>
-	<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
-	<releaseNotes>
-		v.2.0.0
-		- MockItem is at Many.Mocks namespace now
-		- Minor issues and documentation errors fixed
-		- Support for NETFramework removed. Only Netstandard 2.1 now
-		- Documentation Xml file available
-	</releaseNotes>
-    <dependencies>
-      <group targetFramework=".NETStandard2.1">
-        <dependency id="Moq" version="4.13.1" exclude="Build,Analyzers" />
-      </group>
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="Many.Mocks\bin\Release\netstandard2.1\Many.Mocks.*" target="lib\netstandard2.1" />
-  </files>
+	<metadata>
+		<id>Many.Mocks</id>
+		<title>Moq extensions to handle many mocks</title>
+		<version>2.0.0</version>
+		<authors>Sergio José Martínez Primiani</authors>
+		<owners>Sergio José Martínez Primiani</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<projectUrl>https://github.com/yeyopepe/Many.Mocks</projectUrl>
+		<iconUrl>https://www.nuget.org/Content/gallery/img/default-package-icon.svg</iconUrl>
+		<description>Time-saving extensions to create and setup large number of mocks using Moq framework.</description>
+		<tags>moq tdd mocking mocks unittesting agile unittest extensions</tags>
+		<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
+		<releaseNotes>
+			v.2.0.0
+			- MockItem is at Many.Mocks namespace now
+			- Minor issues and documentation errors fixed
+			- Support for NETFramework removed. Only Netstandard 2.1 now
+			- Documentation Xml file available
+		</releaseNotes>
+		
+		<dependencies>
+			<group targetFramework=".NETStandard2.1">
+				<dependency id="Moq" version="4.13.1" exclude="Build,Analyzers" />
+			</group>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Many.Mocks\bin\Release\netstandard2.1\Many.Mocks.*" target="lib\netstandard2.1" />
+	</files>
 </package>
