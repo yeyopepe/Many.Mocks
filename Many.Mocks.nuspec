@@ -10,7 +10,7 @@
 		<projectUrl>https://github.com/yeyopepe/Many.Mocks</projectUrl>
 		<iconUrl>https://www.nuget.org/Content/gallery/img/default-package-icon.svg</iconUrl>
 		<description>Time-saving extensions to create and setup large number of mocks using Moq framework.</description>
-		<tags>moq tdd mocking mocks unittesting agile unittest extensions</tags>
+		<tags>moq tdd mocking mocks unittesting agile unittest extensions netstandard netstandard21</tags>
 		<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
 		<releaseNotes>
 			v.2.0.0
