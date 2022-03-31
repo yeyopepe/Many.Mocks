@@ -3,7 +3,7 @@
 	<metadata>
 		<id>Many.Mocks</id>
 		<title>Moq extensions to handle many mocks</title>
-		<version>2.0.0</version>
+		<version>2.1.0</version>
 		<authors>Sergio José Martínez Primiani</authors>
 		<owners>Sergio José Martínez Primiani</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,6 +13,8 @@
 		<tags>moq tdd mocking mocks unittesting agile unittest extensions netstandard netstandard21</tags>
 		<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
 		<releaseNotes>
+			v.2.1.0
+			- Performance improvements when get mocks
 			v.2.0.0
 			- MockItem is at Many.Mocks namespace now
 			- Minor issues and documentation errors fixed
