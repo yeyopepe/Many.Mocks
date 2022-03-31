@@ -14,7 +14,7 @@
 		<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
 		<releaseNotes>
 			v.2.1.0
-			- Performance improvements when get mocks
+			- Performance improvements when getting mocks
 			v.2.0.0
 			- MockItem is at Many.Mocks namespace now
 			- Minor issues and documentation errors fixed
