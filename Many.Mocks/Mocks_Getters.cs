@@ -143,14 +143,14 @@ namespace Many.Mocks
         private static Mock GetMock(this Type type, Behavior behavior = Behavior.Loose)
         {
             var mockOfMethods = typeof(Mock).GetMethods().Where(p => p.Name == "Of");
-            var mockOfSelected = mockOfMethods.Where(p => p.GetParameters().Count() == 1 &&
-                                            p.GetParameters().First().ParameterType == typeof(Moq.MockBehavior)).First();
+            var mockOfSelected = mockOfMethods.First(p => p.GetParameters().Count() == 1 &&
+                                            p.GetParameters().First().ParameterType == typeof(Moq.MockBehavior));
             var mockOfMethod = mockOfSelected.MakeGenericMethod(type); //Mock.Of<>
 
             var mockedObject = mockOfMethod.Invoke(null, new object[] { behavior.Convert() });
 
             var mockGetMethods = typeof(Mock).GetMethods().Where(p => p.Name == "Get");
-            var mockGetSelected = mockGetMethods.Where(p => p.GetParameters().Count() == 1).First();
+            var mockGetSelected = mockGetMethods.First(p => p.GetParameters().Count() == 1);
             var mockGetMethod = mockGetSelected.MakeGenericMethod(type); //Mock.Get<>
 
             return (Mock)mockGetMethod.Invoke(null, new object[] { mockedObject });

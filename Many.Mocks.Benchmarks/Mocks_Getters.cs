@@ -5,6 +5,7 @@ namespace Many.Mocks.Benchmarks
 {
     [SimpleJob(warmupCount:1, targetCount:10)]
     [RankColumn, MeanColumn]
+    [MemoryDiagnoser]
     public class Mocks_Getters
     {
         [Benchmark]
