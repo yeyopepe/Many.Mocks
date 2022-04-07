@@ -3,10 +3,15 @@ Time-saving extensions to create and setup large number of mocks using Moq frame
 
 👉Download releases at https://www.nuget.org/packages/Many.Mocks/
 
-
+## **Content**
+* How to get the mocks from any method or constructor?
+* How to get a mock from any public method?
+* How to get a mock from every property type of a class/interface?
+* How to instantiate a class injecting a bag of mocks?
+* How to add custom mocks when you try to instante a class?
+* How to get and setup a mock from a bag?
 
 ## **How to use**
-
 If you have a class with several properly-injected dependencies...
 ```
 public class UserManager : UserManager<User>
@@ -65,9 +70,11 @@ var ex = noMockCouldBeGeneratedForTheseClasses.Error; //The thrown exception dur
 ```
 var mocks = typeof(UserManager).GetMocksFrom("uniqueMethodName");
 ```
-or
+
+If you have more than one method with different signatures:
+
 ```
-var methodSignatureOrderedTypes = new List<Type> { typeof(TestClasses.IClass2), typeof(TestClasses.IClass3) };
+var methodSignatureOrderedTypes = new List<Type> { typeof(Interface1), typeof(Interface2) };
 var mocks = typeof(UserManager).GetMocksFrom("OverridedMethodName", methodSignatureOrderedTypes);
 ```
 
@@ -93,4 +100,26 @@ var mocks = typeof(UserManager)
 
 var customMockToReplace = new Mock<IServiceProvider>();
 var result = mocks.TryInstantiate(new List<Mock>() {customMockToReplace}, out UserManager result); //Get the instance replacing your custom mock
+```
+
+
+### **How to get and setup a mock from a bag?**
+```
+var mocks = typeof(UserManager)
+                .GetMocksFromConstructors(); //Get mocks from constructor
+
+var m = mocks.First<Interface1>();
+
+m.Setup(p => bla, bla, bla);
+```
+
+If you have a more complex bag of mocks with different mocks for the same type:
+```
+var mocks = typeof(UserManager)
+                .GetMocksFromConstructors(); //Get mocks from constructor
+
+if (!mocks.TryFind(out IList<Inteface1> listOfInteface1Mocks))
+    throw new Exception(); //Mock not found!!!
+
+
 ```
