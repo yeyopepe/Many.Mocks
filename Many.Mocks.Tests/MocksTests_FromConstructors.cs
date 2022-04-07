@@ -12,10 +12,10 @@ namespace Many.Mocks.Tests
         [Test]
         public void GetMocks_FromConstructors_OK()
         {
-            var result = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors();
+            var result = typeof(TestClasses.ImplIClass3_Ctor2).GetMocksFromConstructors();
             
-            Assert.AreEqual(TestClasses.ImplIClass3.ValidMocksInConstructor, result.Mocks.Count(p => p.Generated), "Number of valid mocks does not match");
-            Assert.AreEqual(TestClasses.ImplIClass3.NotValidMocksInConstructor, result.Mocks.Count(p => !p.Generated), "Number of invalid mocks does not match");
+            Assert.AreEqual(TestClasses.ImplIClass3_Ctor2.ValidMocksInConstructor, result.Mocks.Count(p => p.Generated), "Number of valid mocks does not match");
+            Assert.AreEqual(TestClasses.ImplIClass3_Ctor2.NotValidMocksInConstructor, result.Mocks.Count(p => !p.Generated), "Number of invalid mocks does not match");
 
             Assert.AreEqual(false, result.Mocks.Any(p => !p.Generated), "Some errors found");
             Assert.AreEqual(false, result.Mocks.Any(p => p.Error != null), "Some incorrect exceptions found");
@@ -23,10 +23,10 @@ namespace Many.Mocks.Tests
         [Test]
         public void GetMocks_FromConstructors_GivenSignature_OK()
         {
-            var result = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors(new List<Type> { typeof(TestClasses.IClass1), typeof(TestClasses.IClass2) });
+            var result = typeof(TestClasses.ImplIClass3_Ctor2).GetMocksFromConstructors(new List<Type> { typeof(TestClasses.IClass1), typeof(TestClasses.IClass2) });
 
-            Assert.AreEqual(TestClasses.ImplIClass3.ValidMocksInConstructor, result.Mocks.Count(p => p.Generated), "Number of valid mocks does not match");
-            Assert.AreEqual(TestClasses.ImplIClass3.NotValidMocksInConstructor, result.Mocks.Count(p => !p.Generated), "Number of invalid mocks does not match");
+            Assert.AreEqual(TestClasses.ImplIClass3_Ctor2.ValidMocksInConstructor, result.Mocks.Count(p => p.Generated), "Number of valid mocks does not match");
+            Assert.AreEqual(TestClasses.ImplIClass3_Ctor2.NotValidMocksInConstructor, result.Mocks.Count(p => !p.Generated), "Number of invalid mocks does not match");
 
             Assert.AreEqual(false, result.Mocks.Any(p => !p.Generated), "Some errors found");
             Assert.AreEqual(false, result.Mocks.Any(p => p.Error != null), "Some incorrect exceptions found");
@@ -36,17 +36,17 @@ namespace Many.Mocks.Tests
         {
             Assert.Throws<MethodNotFoundException>(() =>
             {
-                _ = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors(new List<Type> { typeof(TestClasses.IClass1) });
+                _ = typeof(TestClasses.ImplIClass3_Ctor2).GetMocksFromConstructors(new List<Type> { typeof(TestClasses.IClass1) });
             });            
         }
 
         [Test]
         public void GetMocks_FromConstructors_WithNotValidClass_ReturnsError()
         {
-            var result = typeof(TestClasses.ImplIClass2).GetMocksFromConstructors();
+            var result = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFromConstructors();
 
-            Assert.AreEqual(TestClasses.ImplIClass2.ValidMocksInConstructor, result.Mocks.Count(p => p.Generated), "Number of valid mocks does not match");
-            Assert.AreEqual(TestClasses.ImplIClass2.NotValidMocksInConstructor, result.Mocks.Count(p => !p.Generated), "Number of invalid mocks does not match");
+            Assert.AreEqual(TestClasses.ImplIClass2_Ctor1.ValidMocksInConstructor, result.Mocks.Count(p => p.Generated), "Number of valid mocks does not match");
+            Assert.AreEqual(TestClasses.ImplIClass2_Ctor1.NotValidMocksInConstructor, result.Mocks.Count(p => !p.Generated), "Number of invalid mocks does not match");
 
             Assert.AreEqual(false, result.Mocks.Any(p => p.Generated), "Some errors found");
         }

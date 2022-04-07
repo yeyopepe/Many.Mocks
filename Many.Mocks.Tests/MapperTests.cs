@@ -23,8 +23,8 @@ namespace Many.Mocks.Tests
             }
             else
             {
-                m = new Mock<ImplIClass2>();
-                mockType = typeof(ImplIClass2);
+                m = new Mock<ImplIClass2_Ctor1>();
+                mockType = typeof(ImplIClass2_Ctor1);
             }
             result = m.Convert();
 

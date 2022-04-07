@@ -3,7 +3,7 @@
 	<metadata>
 		<id>Many.Mocks</id>
 		<title>Moq extensions to handle many mocks</title>
-		<version>2.1.0</version>
+		<version>3.0.0-beta1</version>
 		<authors>Sergio José Martínez Primiani</authors>
 		<owners>Sergio José Martínez Primiani</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,6 +13,10 @@
 		<tags>moq tdd mocking mocks unittesting agile unittest extensions netstandard netstandard21</tags>
 		<repository type="git" url="https://github.com/yeyopepe/Many.Mocks" />
 		<releaseNotes>
+			v3.0.0-beta1
+			- UseToTryInstantiate() renamed to TryInstantiate()
+			- Now you can can instantiate a class using mocks from the bag (new UseToTryInstantiate overrides)
+			- Now you can invoke methods from the bag (new Invoke overrides)
 			v.2.1.0
 			- Performance improvements when getting mocks
 			v.2.0.0

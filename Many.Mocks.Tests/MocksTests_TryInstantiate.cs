@@ -10,13 +10,62 @@ namespace Many.Mocks.Tests
     public class MocksTests_TryInstantiate
     {
         [Test]
+        public void TryInstantiate_OrderedBag_ReturnsInstance()
+        {
+            var mocks = typeof(ImplIClass3_Ctor2).GetMocksFromConstructors();
+
+            var parse = mocks.TryInstantiate(out ImplIClass3_Ctor2 result);
+
+            Assert.IsTrue(parse, "Parse failed");
+            Assert.IsNotNull(result, "No instantiation");
+        }
+        [Test]
+        public void TryInstantiate_OrderedBag_RepeatedDependencies_ReturnsInstance()
+        {
+            var mocks = typeof(ImplIClass3_Ctor2Repeated).GetMocksFromConstructors();
+
+            var parse = mocks.TryInstantiate(out ImplIClass3_Ctor2Repeated result);
+
+            Assert.IsTrue(parse, "Parse failed");
+            Assert.IsNotNull(result, "No instantiation");
+        }
+        [Test]
+        public void TryInstantiate_ReplaceBag_ReturnsInstance()
+        {
+            var mocks = typeof(ImplIClass3_Ctor2).GetMocksFromConstructors();
+            //To check differences because default implementation is false
+            var replace = new Mock<IClass2>();
+            replace
+                .Setup(p => p.First())
+                .Returns(false);
+
+            var parse = mocks.TryInstantiate(new List<Mock>() { replace }, out ImplIClass3_Ctor2 result);
+
+            Assert.IsTrue(parse, "Parse failed");
+            Assert.IsNotNull(result, "No instantiation");
+
+        }
+
+        [Test]
         public void TryInstantiate_OrderedMockDetails_ReturnsInstance()
         {
-            var mocks = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors()
-                                                        .Distinct().Mocks
-                                                        .Select(p => p.Details);
+            var mocks = typeof(ImplIClass3_Ctor2).GetMocksFromConstructors()
+                                                    .Mocks
+                                                    .Select(p => p.Details);
 
-            var parse = mocks.UseToTryInstantiate(out TestClasses.ImplIClass3 result);
+            var parse = mocks.TryInstantiate(out ImplIClass3_Ctor2 result);
+
+            Assert.IsTrue(parse, "Parse failed");
+            Assert.IsNotNull(result, "No instantiation");
+        }
+        [Test]
+        public void TryInstantiate_OrderedMockDetails_RepeatedDependencies_ReturnsInstance()
+        {
+            var mocks = typeof(ImplIClass3_Ctor2Repeated).GetMocksFromConstructors()
+                                                            .Mocks
+                                                            .Select(p => p.Details);
+
+            var parse = mocks.TryInstantiate(out ImplIClass3_Ctor2Repeated result);
 
             Assert.IsTrue(parse, "Parse failed");
             Assert.IsNotNull(result, "No instantiation");
@@ -24,22 +73,23 @@ namespace Many.Mocks.Tests
         [Test]
         public void TryInstantiate_ReplaceMockDetails_ReturnsInstance()
         {
-            var mocks = typeof(TestClasses.ImplIClass3).GetMocksFromConstructors()
-                                                       .Distinct().Mocks
-                                                       .Select(p => p.Details);
+            var mocks = typeof(ImplIClass3_Ctor2).GetMocksFromConstructors()
+                                                    .Mocks
+                                                    .Select(p => p.Details);
             //To check differences because default implementation is false
             var replace = new Mock<IClass2>();
             replace
                 .Setup(p => p.First())
                 .Returns(false);
 
-            var parse = mocks.UseToTryInstantiate(new List<Mock>() { replace }, out TestClasses.ImplIClass3 result);
+            var parse = mocks.TryInstantiate(new List<Mock>() { replace }, out ImplIClass3_Ctor2 result);
 
             Assert.IsTrue(parse, "Parse failed");
             Assert.IsNotNull(result, "No instantiation");
 
             Assert.AreEqual(replace.Object.First(), result.FirstFromIClass2Dependency());
         }
+
         [Test]
         public void TryInstantiate_OrderedMocks_ReturnsInstance()
         {
@@ -49,7 +99,7 @@ namespace Many.Mocks.Tests
                 new Mock<IClass2>()
             };
 
-            var parse = mocks.UseToTryInstantiate(out TestClasses.ImplIClass3 result);
+            var parse = mocks.TryInstantiate(out ImplIClass3_Ctor2 result);
 
             Assert.IsTrue(parse, "Parse failed");
             Assert.IsNotNull(result, "No instantiation");
@@ -68,7 +118,7 @@ namespace Many.Mocks.Tests
                 .Setup(p => p.First())
                 .Returns(false);
 
-            var parse = mocks.UseToTryInstantiate(new List<Mock>() { replace }, out TestClasses.ImplIClass3 result);
+            var parse = mocks.TryInstantiate(new List<Mock>() { replace }, out ImplIClass3_Ctor2 result);
 
             Assert.IsTrue(parse, "Parse failed");
             Assert.IsNotNull(result, "No instantiation");

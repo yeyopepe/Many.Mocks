@@ -67,20 +67,20 @@ var mocks = typeof(UserManager).GetMocksFromProperties();
 ```
 
 ### **How to instantiate a class injecting a bag of mocks?**
+There are several ways depending on wether the default mocks are valid for you or not. But the easiest way is:
 ```
 var mocks = typeof(UserManager)
-                .GetMocksFromConstructors()
-                .Mocks.Select(p => p.Details); //Get mocks from constructor
+                .GetMocksFromConstructors(); //Get mocks from constructor
 
-var result = mocks.UseToTryInstantiate(out UserManager result); //Get the instance
+var result = mocks.TryInstantiate(out UserManager result); //Get the instance
 ```
 
 ### **How to instantiate a class injecting a bag of mocks and custom ones?**
 ```
 var mocks = typeof(UserManager)
                 .GetMocksFromConstructors()
-                .Mocks.Select(p => p.Details); //Get mocks from constructor
+                .Select(p => p.Details); //Get mocks from constructor
 
 var customMockToReplace = new Mock<IServiceProvider>();
-var result = mocks.UseToTryInstantiate(new List<Mock>() {customMockToReplace}, out UserManager result); //Get the instance replacing your custom mock
+var result = mocks.TryInstantiate(new List<Mock>() {customMockToReplace}, out UserManager result); //Get the instance replacing your custom mock
 ```

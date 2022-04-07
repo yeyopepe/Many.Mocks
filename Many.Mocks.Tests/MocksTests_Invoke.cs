@@ -8,80 +8,143 @@ namespace Many.Mocks.Tests
     public class MocksTests_Invoke
     {
         [Test]
-        public void Invoke_ValidParameters_ReturnsResult()
+        public void Invoke_FromMocks_ValidParameters_ReturnsResult()
         {
-            var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
-                                                        .Distinct()
-                                                        .Mocks.Select(p => p.Details);
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("second")
+                                                                .Mocks.Select(p => p.Details);
             
-            Assert.IsTrue(mocks.Invoke<TestClasses.ImplIClass2, bool>("second", obj), "Invoked method has something wrong");
+            Assert.IsTrue(mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("second", obj), "Invoked method has something wrong");
         }
         [Test]
-        public void Invoke_InvalidMethod_ReturnsException()
+        public void Invoke_FromMocks_InvalidMethod_ReturnsException()
         {
-            var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
-                                                        .Distinct()
-                                                        .Mocks.Select(p => p.Details);
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("second")
+                                                                .Mocks.Select(p => p.Details);
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
-                mocks.Invoke<TestClasses.ImplIClass2, bool>("notexist", obj);
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("notexist", obj);
             });
         }
         [Test]
-        public void Invoke_SignatureDoesNotMatch_ReturnsException()
+        public void Invoke_FromMocks_SignatureDoesNotMatch_ReturnsException()
         {
-            var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("second")
-                                                        .Distinct()
-                                                        .Mocks.Select(p => p.Details);
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("second")
+                                                                .Mocks.Select(p => p.Details);
             mocks = mocks.Where(p => false); //empty list
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
-                mocks.Invoke<TestClasses.ImplIClass2, bool>("second", obj);
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("second", obj);
+            });
+        }
+
+        [Test]
+        public void Invoke_FromBag_ValidParameters_ReturnsResult()
+        {
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("second");
+
+            Assert.IsTrue(mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("second", obj), "Invoked method has something wrong");
+        }
+        [Test]
+        public void Invoke_FromBag_InvalidMethod_ReturnsException()
+        {
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("second");
+
+            Assert.Throws<MethodNotFoundException>(() =>
+            {
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("notexist", obj);
             });
         }
         [Test]
-        public void VoidInvoke_ValidParameters_EndsWithoutException()
+        public void Invoke_FromBag_SignatureDoesNotMatch_ReturnsException()
         {
-            var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
-                                                        .Distinct()
-                                                        .Mocks.Select(p => p.Details);
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("second");
+            mocks.Mocks = mocks.Mocks.Where(p =>  false); //empty list
+
+            Assert.Throws<MethodNotFoundException>(() =>
+            {
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("second", obj);
+            });
+        }
+
+
+        [Test]
+        public void VoidInvoke_FromMocks_ValidParameters_EndsWithoutException()
+        {
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("voidsecond")
+                                                                .Mocks.Select(p => p.Details);
 
             Assert.DoesNotThrow(() =>
             {
-                mocks.Invoke<TestClasses.ImplIClass2>("voidsecond", obj);
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1>("voidsecond", obj);
             });
         }
         [Test]
-        public void VoidInvoke_InvalidMethod_ReturnsException()
+        public void VoidInvoke_FromMocks_InvalidMethod_ReturnsException()
         {
-            var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
-                                                        .Distinct()
-                                                        .Mocks.Select(p => p.Details);
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("voidsecond")
+                                                                .Mocks.Select(p => p.Details);
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
-                mocks.Invoke<TestClasses.ImplIClass2, bool>("notexist", obj);
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("notexist", obj);
             });
         }
         [Test]
-        public void VoidInvoke_SignatureDoesNotMatch_ReturnsException()
+        public void VoidInvoke_FromMocks_SignatureDoesNotMatch_ReturnsException()
         {
-            var obj = new TestClasses.ImplIClass2(null);
-            var mocks = typeof(TestClasses.ImplIClass2).GetMocksFrom("voidsecond")
-                                                        .Distinct()
-                                                        .Mocks.Select(p => p.Details);
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("voidsecond")
+                                                                .Mocks.Select(p => p.Details);
             mocks = mocks.Where(p => false); //empty list
 
             Assert.Throws<MethodNotFoundException>(() =>
             {
-                mocks.Invoke<TestClasses.ImplIClass2, bool>("voidsecond", obj);
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("voidsecond", obj);
+            });
+        }
+
+        [Test]
+        public void VoidInvoke_FromBag_ValidParameters_EndsWithoutException()
+        {
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("voidsecond");
+
+            Assert.DoesNotThrow(() =>
+            {
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1>("voidsecond", obj);
+            });
+        }
+        [Test]
+        public void VoidInvoke_FromBag_InvalidMethod_ReturnsException()
+        {
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("voidsecond");
+
+            Assert.Throws<MethodNotFoundException>(() =>
+            {
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("notexist", obj);
+            });
+        }
+        [Test]
+        public void VoidInvoke_FromBag_SignatureDoesNotMatch_ReturnsException()
+        {
+            var obj = new TestClasses.ImplIClass2_Ctor1(null);
+            var mocks = typeof(TestClasses.ImplIClass2_Ctor1).GetMocksFrom("voidsecond");
+            mocks.Mocks = mocks.Mocks.Where(p => false); //empty list
+
+            Assert.Throws<MethodNotFoundException>(() =>
+            {
+                mocks.Invoke<TestClasses.ImplIClass2_Ctor1, bool>("voidsecond", obj);
             });
         }
     }
