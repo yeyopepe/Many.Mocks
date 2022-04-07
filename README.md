@@ -3,9 +3,11 @@ Time-saving extensions to create and setup large number of mocks using Moq frame
 
 👉Download releases at https://www.nuget.org/packages/Many.Mocks/
 
+
+
 ## **How to use**
 
-You have a class with lots of mocks...
+If you have a class with several properly-injected dependencies...
 ```
 public class UserManager : UserManager<User>
     {
@@ -38,7 +40,7 @@ public class UserManager : UserManager<User>
     }
 ```
   
-### **How to generate a bag of mocks from any method or constructor?**
+### **How to get the mocks from any method or constructor?**
 1. You can get a bag of nedeed mocks just typing:
 ```
 var mocks = typeof(UserManager).GetMocksFromConstructors(); //11 mocks: 2 from ctor. 1 and 9 from ctor. 2
@@ -59,9 +61,17 @@ If a class is not proxiable and no mock can be created you can check it in the d
 var noMockCouldBeGeneratedForTheseClasses = mocks.Mocks.Where(p => !p.Generated); //Get the errors
 var ex = noMockCouldBeGeneratedForTheseClasses.Error; //The thrown exception during mock generation
 ```
+### **How to get a mock from any public method?**
+```
+var mocks = typeof(UserManager).GetMocksFrom("uniqueMethodName");
+```
+or
+```
+var methodSignatureOrderedTypes = new List<Type> { typeof(TestClasses.IClass2), typeof(TestClasses.IClass3) };
+var mocks = typeof(UserManager).GetMocksFrom("OverridedMethodName", methodSignatureOrderedTypes);
+```
 
-### **How to generate a mock for every property type of a class/interface?**
-Just ask for them :)
+### **How to get a mock from every property type of a class/interface?**
 ```
 var mocks = typeof(UserManager).GetMocksFromProperties();
 ```
@@ -75,7 +85,7 @@ var mocks = typeof(UserManager)
 var result = mocks.TryInstantiate(out UserManager result); //Get the instance
 ```
 
-### **How to instantiate a class injecting a bag of mocks and custom ones?**
+### **How to add custom mocks when you try to instante a class?**
 ```
 var mocks = typeof(UserManager)
                 .GetMocksFromConstructors()
