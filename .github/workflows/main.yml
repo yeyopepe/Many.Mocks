@@ -16,6 +16,7 @@ jobs:
       matrix:
         configuration: [Release]
         dotnet-version: ['6.0.x']
+        unittests-files: [ '**\*.Tests.csproj' ]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -30,7 +31,7 @@ jobs:
         - name: Compile
           run: dotnet build --configuration ${{ matrix.configuration }}
         - name: Test with dotnet
-          run: dotnet test **/*.Test.csproj --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+          run: dotnet test ${{ matrix.unittests-files }} --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
         - name: Upload dotnet test results
           uses: actions/upload-artifact@v3
           with:
